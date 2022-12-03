@@ -1,0 +1,26 @@
+
+function FriendTop3({user}){
+    return(
+        <>
+        <div>
+            <h3>Top 3 Artists </h3>
+                <ol>
+                {user.topartists.map((song) => (
+                    <li>{song}</li>
+                ))}
+                </ol>
+            
+        </div>
+                <div>
+                <h3>Top 3 Songs</h3>
+                <ol>
+                    {user.topsongs.map((song) => (
+                        <li>{song}</li>
+                    ))}
+                </ol>
+                
+            </div>
+            </>
+    )
+}
+export default FriendTop3

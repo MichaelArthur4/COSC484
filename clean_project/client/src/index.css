@@ -1,0 +1,83 @@
+* {
+  
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  min-height: 5vh;
+  text-align: center;
+}
+body {
+  margin: 0;
+  color:rgb(255, 187, 0);
+  background-color: rgb(19, 19, 0);
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif,
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.container {
+  max-width: 768px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.card {
+  background-color: rgb(161, 166, 173);
+  color: rgb(34, 31, 31);
+  border-radius: 15px;
+  padding: 40px 50px;
+  margin: 20px 0;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  max-width: 60%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+}
+.input {
+  align-items: center;
+}
+.input-group {
+  padding: 10px 0;
+}
+
+.sidebar {
+  border-right: 1px solid;
+  flex: 0.25;
+  min-width: 250px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.sidebarOption {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 30px;
+}
+.sidebarOption:hover {
+  background-color: #e8f5fe;
+  color: var(--twitter-color);
+  transition: color 100ms ease-out;
+}
+.sidebarOption > .MuiSvgIcon-root {
+  padding: 20px;
+}
+.sidebarOption > h2 {
+  font-weight: 700;
+  font-size: 20px;
+  margin-right: 20px;
+}
+.sidebarOption--active {
+  color:rgb(255, 187, 0);
+}
