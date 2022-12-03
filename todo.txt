@@ -1,6 +1,0 @@
-TODO
-
-1) Create pages for profile and settings
-2) Figure out how to switch pages
-3) Figure out how to validate passwords and stuff
-4) Searchbar component
