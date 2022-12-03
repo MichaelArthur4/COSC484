@@ -5,9 +5,13 @@ import { AuthContext } from '../../context/AuthContext'
 
 function UserInfo(){
 
-    const {curUser, editData} = useContext(AuthContext)
+    const {curUser, getCurrentUser} = useContext(AuthContext)
+    const {editData} = useContext(UserContext)
     const [tempBio, setTempBio] = useState("")
     const [editBool,setEditBool] = useState(false)
+    const [bio, setBio] = useState(curUser.bio)
+
+    //need use effect or something to update values
 
     const onEdit = () => {
         setEditBool(!editBool)
@@ -27,22 +31,22 @@ function UserInfo(){
             username: curUser.username,
             bio: tempBio
         })
+        //setBio(tempBio)
         console.log('logged editdata')
     }
 
     var url1 = "https://st3.depositphotos.com/7486768/17806/v/600/depositphotos_178065822-stock-illustration-profile-anonymous-face-icon-gray.jpg?forcejpeg=true"
-    //var name = "Default Name"
-    //var bio = "This is the bio. I do not feel like adding anything in here right now."
+
     
 
     return(
         <div>
             <h2>{curUser.username}</h2>
-            <img src = {url1} alt = "me" height = {200} width = {200}/>
+            <img src = {curUser.profileUrl} alt = "me" height = {200} width = {200}/>
             <h3>Bio {<button onClick = {onEdit} className = 'edit'>
                 <FaEdit color = 'black' />
             </button>}</h3>
-            {!editBool && <><p>{curUser.bio}</p> </>}
+            {!editBool && <><p>{bio}</p> </>}
             {editBool && 
                 <>
                 <input onChange = {getTempBio}  type = 'text'></input> <br></br>

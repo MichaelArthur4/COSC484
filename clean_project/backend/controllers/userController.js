@@ -157,16 +157,25 @@ const getFollowers = asyncHandler(async(req,res) => {
 
 
 //add a follower to user and following to target user 
-const addFollowing = asyncHandler(async(req, res) => {
-    const {username, userToFollow} = req.body
-    if(await User.findOne(username= {userToFollow})){
-    const user = await User.findOneAndUpdate({username}, {$push: {following:userToFollow}})}
-    else{
-        res.status(404)
-    }
-})
+//Mike fix of josiah 'code'
+const addFollow = async (req,res)=> {
+    console.log(req.body)
+    const {id, idMe} = req.body
+        try{
+            const user = await User.findById(id);
+            console.log('user: ' + user)
+            const currentUser = await User.findById(idMe);
+            console.log('current user: ' + currentUser)
+            if(!user.follower.includes(idMe)){
+                await user.updateOne({$push:{follower:idMe}});
+                await currentUser.updateOne({$push:{following:id}});
+                res.status(200).json("success");
 
-
+            }
+        }catch(err){
+            res.status(500).json({'message': 'error in addFollow'})
+        }
+}
 
 
 //get a list of user posts
@@ -252,5 +261,7 @@ module.exports = {
     getPosts,
     getUser,
     addPost, 
-    addComments
+    addComments,
+    addFollowing,
+    addFollow
 }

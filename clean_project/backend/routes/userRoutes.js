@@ -1,5 +1,5 @@
 const express = require('express')
-const { addComments, registerUser, loginUser, getMe, getUsers,editInfo, deleteUser, getPosts, getUser, addPost} = require('../controllers/userController')
+const {addFollow, addFollowing, addComments, registerUser, loginUser, getMe, getUsers,editInfo, deleteUser, getPosts, getUser, addPost} = require('../controllers/userController')
 const router = express.Router()
 const {protect} = require('../middleware/authMiddleware')
 
@@ -46,5 +46,6 @@ router.get('/user', getUser)
 //no input
 router.get('/userlist', getUsers)
 
+router.post("/me/following", addFollow);
 
 module.exports = router

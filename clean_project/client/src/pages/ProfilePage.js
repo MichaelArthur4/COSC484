@@ -5,9 +5,11 @@ import Top3Songs from "../components/profile/Top3Songs"
 import PostList from "../components/PostList"
 import { useContext } from "react"
 import {useNavigate} from 'react-router-dom'
+import { AuthContext } from "../context/AuthContext"
+
 function ProfilePage(){
 
-    const {curUser} = useContext(UserContext)
+    const {curUser} = useContext(AuthContext)
     const nav = useNavigate()
     if(curUser){
         return(

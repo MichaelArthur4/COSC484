@@ -8,9 +8,11 @@ function Top3Artists(){
     const [editBool,setEditBool] = useState(false)
     const {editData} = useContext(UserContext)
     const {curUser} = useContext(AuthContext)
+
     const [a1, setA1] = useState("")
     const [a2, setA2] = useState("")
     const [a3, setA3] = useState("")
+
     const [art1, setArt1] = useState(curUser.topartists[0])
     const [art2, setArt2] = useState(curUser.topartists[1])
     const [art3, setArt3] = useState(curUser.topartists[2])
@@ -31,15 +33,18 @@ function Top3Artists(){
     }
     
     const changeArtists = () => {
-        if(a1 != ""){ setArt1(a1)}
+        console.log(a1)
+        console.log(art1)
+        if(a1 != undefined){ setArt1(a1)}
         else{
+            console.log(`in the else, ${a1} ${art1}`)
             setA1(art1)
         }
-        if(a2 != ""){ setArt2(a2)}
+        if(a2 != undefined){ setArt2(a2)}
         else{
             setA1(art2)
         }
-        if(a3 != ""){ setArt3(a3)}
+        if(a3 != undefined){ setArt3(a3)}
         else{
             setA1(art3)
         }
