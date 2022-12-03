@@ -1,13 +1,18 @@
 import Post from "./Post"
 import { useContext } from "react"
 import UserContext from "../context/UserContext"
+import { AuthContext } from "../context/AuthContext"
 
 function PostList(){
-   const {curUser} = useContext(UserContext)
+   const {curUser} = useContext(AuthContext)
         return(
+                <>
                 <div>This is the post list that I will fix later </div>
+                <p>{curUser.username}</p>
+                </>
         )
 /*
+
     return (<div className = 'post-feed'>
                 <p> this is the post feed</p>
                 {curUser.posts ? curUser.posts.map((post) =>

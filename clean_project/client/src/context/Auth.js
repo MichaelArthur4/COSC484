@@ -11,38 +11,58 @@ export const Auth = () =>  {
 
     const login = useCallback((id, token) => {
         setToken(token);
-        console.log(id)
-        console.log(token)
-        console.log('auth login! ')
+        console.log({token});
+        console.log('auth login! ' + id);
+        
+         if(id){
+            try{
+              getCurrentUser(id)
+            }
+            catch{
+  
+            }
+          }
+            else{
+              try{
+                decodeToken()
+              }
+              catch{}
+            } 
+        
         //setCurUser(id);
-        localStorage.setItem(
-          'data',
+        //localStorage.setItem('token', token);
+        
+          localStorage.setItem('data',
           JSON.stringify({
             ID: id,
             token: token,
           })
+
+          
         );
+        
       },[]);
 
       const decodeToken = () => {
           var decoded = jwt_decode(token)
-          console.log(decoded)
+          console.log('this is decoded running ' +decoded)
           getCurrentUser(decoded)
       
       }
       //just get whole ass user from the get
       const getCurrentUser = async(id) => {
         console.log('getcurrent user ' + id)
+        console.log(JSON.stringify({id: id}))
         const response = await fetch('/users/me', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
             },
-            body: JSON.stringify(id)
+            body: JSON.stringify({id: id})
         })
         try{
             const data = await response.json()
-
+            console.log(data + ' is the data!')
             if(data){
                 setCurUser(data)
                 console.log(curUser)
@@ -57,22 +77,20 @@ export const Auth = () =>  {
       const logout = useCallback(() => {
         setToken(null);
         setID(null);
+        setCurUser(null);
         localStorage.removeItem('data');
       }, []);
 
 
       useEffect(() => {
-        const storedData = JSON.parse(localStorage.getItem('data'));
+        const storedData = JSON.parse(localStorage.getItem(/*'token'*/'data'));
         if (
           storedData &&
           storedData.token
         ) {
-          login(storedData.userId, storedData.token);
-          if(token){ try{
-            decodeToken(token)
-            console.log('token decoded')}
-            catch{}}
-          console.log('use effect getting called?')
+          console.log('stored data: ' + storedData.ID + ', ' + storedData.token)
+          login(storedData.ID, storedData.token);
+          
         }
       }, [login]);
       return {token, login, logout, ID, curUser};
@@ -84,3 +102,19 @@ export const Auth = () =>  {
   decodeToken(token)
   console.log('token decoded')}
   catch{}} */
+
+
+  /* if(){
+            try{
+              getCurrentUser(id)
+            }
+            catch{
+  
+            }
+          }
+            else{
+              try{
+                decodeToken()
+              }
+              catch{}
+            } */

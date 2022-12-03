@@ -1,10 +1,11 @@
 import {FaEdit} from 'react-icons/fa'
 import {useState, useContext} from 'react'
 import UserContext from '../../context/UserContext'
+import { AuthContext } from '../../context/AuthContext'
 
 function UserInfo(){
 
-    const {curUser, editData} = useContext(UserContext)
+    const {curUser, editData} = useContext(AuthContext)
     const [tempBio, setTempBio] = useState("")
     const [editBool,setEditBool] = useState(false)
 

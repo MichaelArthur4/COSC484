@@ -2,10 +2,12 @@ import {FaEdit} from 'react-icons/fa'
 import {useState, useContext} from 'react'
 import UserContext from '../../context/UserContext'
 import {curUser, editData} from '../../context/UserContext'
+import { AuthContext } from '../../context/AuthContext'
 function Top3Artists(){
 
     const [editBool,setEditBool] = useState(false)
-    const {curUser, editData} = useContext(UserContext)
+    const {editData} = useContext(UserContext)
+    const {curUser} = useContext(AuthContext)
     const [a1, setA1] = useState("")
     const [a2, setA2] = useState("")
     const [a3, setA3] = useState("")

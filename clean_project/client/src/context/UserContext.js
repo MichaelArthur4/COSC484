@@ -38,7 +38,7 @@ export const UserProvider = ({children}) => {
     /*const deleteUser = async(user) => {
         const response = await fetch('')
     }*/
-
+    //maybe pass whole ass thing? not just id?
      const loginUser = async(userInfo) => {
         const response = await fetch('/users/login', {
             method: 'POST',
@@ -55,7 +55,7 @@ export const UserProvider = ({children}) => {
             console.log(data.id + "    " + data.token)
             //console.log(curUser)
             if(data != undefined){
-                auth.login(data.id, data.token)}
+                auth.login(data.id,data.token)}
                 console.log("the login has been passed, " + data.username)
         }
         catch{

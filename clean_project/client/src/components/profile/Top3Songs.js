@@ -2,13 +2,15 @@ import {FaEdit} from 'react-icons/fa'
 import {useState, useContext} from 'react'
 import UserContext from '../../context/UserContext'
 import {editData, curUser} from '../../context/UserContext' 
+import { AuthContext } from '../../context/AuthContext'
 function Top3Songs(){
 
     const [editBool,setEditBool] = useState(false)
     const [temp1,setTemp1] = useState("")
     const [temp2,setTemp2] = useState("")
     const [temp3,setTemp3] = useState("")
-    const {curUser,editData} = useContext(UserContext)
+    const {editData} = useContext(UserContext)
+    const {curUser} = useContext(AuthContext)
 
     const [t1, setT1] = useState(curUser.topsongs[0])
     const [t2, setT2] = useState(curUser.topsongs[1])
