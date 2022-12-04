@@ -1,5 +1,4 @@
-import {useCallback, useContext, useState} from 'react'
-import UserContext, {UserProvider} from './context/UserContext'
+import {UserProvider} from './context/UserContext'
 import LogInPage from './pages/LogInPage';
 import SignUpPage from './pages/SignUpPage';
 import MainPage from './pages/MainPage';
@@ -9,15 +8,13 @@ import Header from './components/Header';
 import SettingsPage from './pages/SettingsPage';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import SidebarPage from './pages/SidebarPage';
-import FriendPage from './pages/FriendPage';
 import TestingPage from './pages/TestingPage';
-import {useNavigate} from 'react-router-dom';
 import {Auth} from './context/Auth';
 import { AuthContext } from './context/AuthContext';
 
 function App() {
 
-  const { token, login, logout, ID, curUser } = Auth();
+  const { token, login, logout, ID, curUser, getCurrentUser } = Auth();
   
   var routes; 
   
@@ -41,7 +38,7 @@ function App() {
   } 
   
   return (
-    <AuthContext.Provider value = {{ID, token, login, logout, curUser}}>
+    <AuthContext.Provider value = {{ID, token, login, logout, curUser, getCurrentUser}}>
     <UserProvider>
     <div>
     <Router>
@@ -60,14 +57,3 @@ function App() {
 
 
 export default App;
-//<Route path = '/friend' element = {<FriendPage /> }/>
-/*
-<Route exact path = '/' element = {<MainPage />} />
-<Route path ='/signup' element = {<SignUpPage />} />
-<Route path = '/profile' element = {<ProfilePage />} />
-<Route path = '/friendslist' element = {<FriendsListPage />} />
-<Route path = '/Login' element = {<LogInPage />} />
-<Route path = '/settings' element = {<SettingsPage/>}/>
-<Route path = '/sidebar' element = {<SidebarPage/>}/>
-<Route path = '/fa' element = {<FuckingAroundPage/>}/>
-*/

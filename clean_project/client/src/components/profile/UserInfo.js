@@ -1,16 +1,24 @@
 import {FaEdit} from 'react-icons/fa'
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import UserContext from '../../context/UserContext'
 import { AuthContext } from '../../context/AuthContext'
 
 function UserInfo(){
 
-    const {curUser, getCurrentUser} = useContext(AuthContext)
+    
+    const {curUser} = useContext(AuthContext)
     const {editData} = useContext(UserContext)
     const [tempBio, setTempBio] = useState("")
     const [editBool,setEditBool] = useState(false)
     const [bio, setBio] = useState(curUser.bio)
+    const auth = useContext(AuthContext)
 
+    useEffect(() => {
+        auth.getCurrentUser(curUser._id)
+        console.log('in use effect: ' +curUser)
+
+        }
+    , [])
     //need use effect or something to update values
 
     const onEdit = () => {
@@ -31,8 +39,12 @@ function UserInfo(){
             username: curUser.username,
             bio: tempBio
         })
-        //setBio(tempBio)
-        console.log('logged editdata')
+        if(curUser._id != undefined){
+            auth.getCurrentUser(curUser._id)
+            setBio(tempBio)
+            console.log('logged editdata')
+        }
+        
     }
 
     var url1 = "https://st3.depositphotos.com/7486768/17806/v/600/depositphotos_178065822-stock-illustration-profile-anonymous-face-icon-gray.jpg?forcejpeg=true"

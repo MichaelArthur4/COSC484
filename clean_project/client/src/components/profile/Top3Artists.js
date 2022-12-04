@@ -1,5 +1,5 @@
 import {FaEdit} from 'react-icons/fa'
-import {useState, useContext} from 'react'
+import {useState, useContext,useEffect} from 'react'
 import UserContext from '../../context/UserContext'
 import {curUser, editData} from '../../context/UserContext'
 import { AuthContext } from '../../context/AuthContext'
@@ -7,7 +7,7 @@ function Top3Artists(){
 
     const [editBool,setEditBool] = useState(false)
     const {editData} = useContext(UserContext)
-    const {curUser} = useContext(AuthContext)
+    const {curUser,getCurrentUser} = useContext(AuthContext)
 
     const [a1, setA1] = useState("")
     const [a2, setA2] = useState("")
@@ -19,6 +19,9 @@ function Top3Artists(){
 
     
     
+    useEffect(() => {
+        getCurrentUser(curUser._id)
+    },[])
 
     const changeA1 = (e) =>{
         setA1(e.target.value)
@@ -33,11 +36,8 @@ function Top3Artists(){
     }
     
     const changeArtists = () => {
-        console.log(a1)
-        console.log(art1)
         if(a1 != undefined){ setArt1(a1)}
         else{
-            console.log(`in the else, ${a1} ${art1}`)
             setA1(art1)
         }
         if(a2 != undefined){ setArt2(a2)}
@@ -55,6 +55,7 @@ function Top3Artists(){
             topartists: [`${a1}`, `${a2}`, `${a3}`]
         }
         editData(changes)
+        getCurrentUser(curUser._id)
 
     }
     const onEdit = () => {
@@ -74,9 +75,9 @@ function Top3Artists(){
 
                 {!editBool && 
                 <ol>
-                {curUser.topartists.map((song) => (
-                    <li>{song}</li>
-                ))}
+                    <li>{art1}</li>
+                    <li>{art2}</li>
+                    <li>{art3}</li>
                 </ol>
                 }
                 {editBool && 

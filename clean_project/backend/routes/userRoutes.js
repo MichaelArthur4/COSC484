@@ -16,7 +16,6 @@ router.post('/login', loginUser)
 
 //protect 
 router.post('/me', getMe)
-
 //edits info of a specified user
 //input: {username, info (bio: , etc)}
 //protect

@@ -1,5 +1,5 @@
 import {FaEdit} from 'react-icons/fa'
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import UserContext from '../../context/UserContext'
 import {editData, curUser} from '../../context/UserContext' 
 import { AuthContext } from '../../context/AuthContext'
@@ -10,12 +10,13 @@ function Top3Songs(){
     const [temp2,setTemp2] = useState("")
     const [temp3,setTemp3] = useState("")
     const {editData} = useContext(UserContext)
-    const {curUser} = useContext(AuthContext)
-
+    const {curUser, getCurrentUser} = useContext(AuthContext)
     const [t1, setT1] = useState(curUser.topsongs[0])
     const [t2, setT2] = useState(curUser.topsongs[1])
     const [t3, setT3] = useState(curUser.topsongs[2])
-
+    useEffect(() => {
+        getCurrentUser(curUser._id)
+    },[])
     const changeTemp1 = (e) =>{
         setTemp1(e.target.value)
     }
@@ -47,6 +48,7 @@ function Top3Songs(){
             topsongs: [`${temp1}`, `${temp2}`, `${temp3}`]
         }
         editData(changes)
+        getCurrentUser(curUser._id)
 
     }
     const onEdit = () => {
@@ -64,9 +66,9 @@ function Top3Songs(){
             <ol>
             {!editBool && 
                 <ol>
-                {curUser.topsongs.map((song) => (
-                    <li>{song}</li>
-                ))}
+                <li>{t1}</li>
+                <li>{t2}</li>
+                <li>{t3}</li>
             </ol>
                 }
                 {editBool && 

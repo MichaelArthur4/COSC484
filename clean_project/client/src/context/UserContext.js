@@ -3,7 +3,7 @@ import jwt_decode from 'jwt-decode'
 import { AuthContext } from './AuthContext'
 import { useContext } from 'react'
 //the Provider allows access to variables inside provider... that's why your shit ain't work
-const UserContext = createContext({ID: null, token: null, login: () => {}, logout: () => {}})
+const UserContext = createContext(/*{ID: null, token: null, login: () => {}, logout: () => {}}*/)
 
 export const UserProvider = ({children}) => {
     
@@ -15,10 +15,6 @@ export const UserProvider = ({children}) => {
     const [users, setUsers] = useState(null)
 
     const auth = useContext(AuthContext)
-    //useEffect(()=> {
-        //fetchUsers()
-    //},[])
-
 
     const registerUser = async (newUser) => {
         const response = await fetch('/users/', {
@@ -33,9 +29,7 @@ export const UserProvider = ({children}) => {
             
             if(data){
                 auth.login(data.id,data.token)
-                console.log('login from register' + data.id + ' ' + data.token)
             }
-        console.log(data)
 
         }
         catch{
@@ -62,13 +56,9 @@ export const UserProvider = ({children}) => {
         try{
             const data = await response.json()
             console.log(data)
-            //setToken(data.token)
-            //setCurUser(data)
-            console.log(data.id + "    " + data.token)
-            //console.log(curUser)
             if(data != undefined){
+                console.log(auth.login)
                 auth.login(data.id,data.token)}
-                console.log("the login has been passed, " + data.username)
         }
         catch{
         }
@@ -77,28 +67,25 @@ export const UserProvider = ({children}) => {
     function saveToken(){
         if(token != undefined){
         localStorage.setItem('token', token)
-        console.log('token saved!')
         getUserIDFromToken()}
         else{
-            console.log('the token was undefined sorry')
         }
     }
 
     function getUserIDFromToken(){
         var decoded = jwt_decode(token)
-        console.log(decoded)
     }
 
     const logout = () => {
         setCurUser(null)
         setToken(null)
         localStorage.removeItem('data')
-        console.log('user has been logged out')
+
     }
 
     //info is {username: ..., bio: ...}
     const editData = async(info) => {
-        console.log('logged edit data in user context')
+
         const response = await fetch('/users/me', {
             method: 'PUT',
             headers: {
@@ -106,7 +93,6 @@ export const UserProvider = ({children}) => {
             },
             body: JSON.stringify(info)
         })
-        console.log('logged after ')
         const data = await response.json()
 
         setCurUser(data)
@@ -124,8 +110,6 @@ export const UserProvider = ({children}) => {
         })
         const data = await response.json({message:'hi'})
         setUsers(data)
-        console.log(data)
-        
     }
 
 
@@ -138,7 +122,6 @@ export const UserProvider = ({children}) => {
             },
             body: JSON.stringify(info)
         })
-        console.log(info)
         const data = await response.json()
 
         setCurUser(data)
@@ -175,26 +158,9 @@ export const UserProvider = ({children}) => {
         try{
         const data = await response.json()
         
-        setCurUser(data)
-        console.log('current user data: ' + curUser)}
+        setCurUser(data)}
         catch{}
     }
-
-    /*const editUserInfo = async(userInfo) => {
-        const response = await fetch('/user/', {
-            method: 'PUT',
-            headers: {
-            'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify(userInfo)
-        })
-        const data = await response.json()
-        console.log(data)
-        setUser(data)*
-    }*/
-    
-    //how to get from username
-  
 
     return (
         <UserContext.Provider value = {{
