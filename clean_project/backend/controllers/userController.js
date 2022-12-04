@@ -36,12 +36,11 @@ const registerUser = asyncHandler(async(req,res) => {
         username,
         password: hashedPass
     })
-    //???
+
     if(user){
         res.status(201).json({
-            _id: user._id,
+            id: user._id,
             username: user.username,
-            password: user.password,
             token: getToken(user._id)
         })
         console.log(user.username)
@@ -262,6 +261,5 @@ module.exports = {
     getUser,
     addPost, 
     addComments,
-    addFollowing,
     addFollow
 }

@@ -32,7 +32,7 @@ function App() {
     }
    if(token){
     routes = (<>
-    <Route path = '/main' element = {<MainPage />} />
+    <Route path = '/*' element = {<MainPage />} />
     <Route path = '/:username' element = {<ProfilePage />} />
     <Route path = '/friendslist' element = {<FriendsListPage />} />
     <Route path = '/settings' element = {<SettingsPage/>}/>

@@ -10,6 +10,7 @@ export const Auth = () =>  {
     const [loggedIn, setLogged] = useState(false)
 
     const login = useCallback((id, token) => {
+      console.log('login from register in login')
         setToken(token);
         console.log({token});
         console.log('auth login! ' + id);
@@ -24,6 +25,7 @@ export const Auth = () =>  {
           }
             else{
               try{
+                console.log('decoding token')
                 decodeToken()
               }
               catch{}

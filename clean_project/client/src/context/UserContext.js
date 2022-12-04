@@ -28,10 +28,22 @@ export const UserProvider = ({children}) => {
             },
             body: JSON.stringify(newUser)
         })
-        const data = await response.json()
+        try{
+            const data = await response.json()
+            
+            if(data){
+                auth.login(data.id,data.token)
+                console.log('login from register' + data.id + ' ' + data.token)
+            }
         console.log(data)
 
-        setCurUser(data)
+        }
+        catch{
+
+        }
+        
+    
+
     } 
 
     //link to api
