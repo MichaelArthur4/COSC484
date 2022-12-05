@@ -2,13 +2,21 @@ import Post from "./Post"
 import { useContext } from "react"
 import UserContext from "../context/UserContext"
 import { AuthContext } from "../context/AuthContext"
+import Card from "./shared/Card"
 
 function PostList(){
    const {curUser} = useContext(AuthContext)
         return(
                 <>
-                <div>This is the post list that I will fix later </div>
-                <p>{curUser.username}</p>
+                <h2>{curUser.username}'s Song Reviews: </h2>
+                {curUser.posts ? curUser.posts.map((post) => (
+                        <Card>
+                          <h4>{post.songname}</h4>
+                          <p>{post.review}</p>
+                          <h3>------------------</h3>
+                        </Card>
+                        
+                )) : <p>No posts yet</p>}
                 </>
         )
 /*

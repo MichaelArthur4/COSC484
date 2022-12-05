@@ -30,7 +30,7 @@ function LoginField(){
 
         loginUser(user)
 
-        nav('/main')
+        nav('/')
     }
 
 

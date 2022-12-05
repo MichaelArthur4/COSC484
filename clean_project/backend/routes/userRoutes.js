@@ -1,5 +1,9 @@
 const express = require('express')
-const {addFollow, addFollowing, addComments, registerUser, loginUser, getMe, getUsers,editInfo, deleteUser, getPosts, getUser, addPost} = require('../controllers/userController')
+const {getFollowingArray, addFollow, addFollowing, 
+    addComments, registerUser, loginUser, 
+    getMe, getUsers,editInfo, deleteUser, 
+    getPosts, getUser, addPost,
+    getFollowerArray} = require('../controllers/userController')
 const router = express.Router()
 const {protect} = require('../middleware/authMiddleware')
 
@@ -35,16 +39,21 @@ router.post('/user/posts/comments', addComments)
 //adds post to list of posts from specified user
 //input: {username, post}
 //protect
+
 router.post('/me/posts', addPost)
 
 //returns a specified user
 //input: {username}
-router.get('/user', getUser)
+router.post('/user', getUser)
 
 //returns all users
 //no input
-router.get('/userlist', getUsers)
+router.get("/userlist", getUsers)
 
+//add a following
 router.post("/me/following", addFollow);
+//get an array of followers/following
+router.post("/me/following/users", getFollowingArray);
+router.post("/me/followers", getFollowerArray)
 
 module.exports = router

@@ -2,31 +2,37 @@ import Card from "../shared/Card";
 import {Link} from 'react-router-dom'
 import FriendPage from "../../pages/FriendPage";
 import UserContext from "../../context/UserContext";
-import { useContext } from "react";
-function FriendCard({friend}){
-    //function to retreive the info of a user based off username
-    //to display in a friendpage
+import { AuthContext } from "../../context/AuthContext";
+import { useContext, useState } from "react";
+function FriendCard({friend, isFriend}){
+
     var username = '1'
     var url = "https://st3.depositphotos.com/7486768/17806/v/600/depositphotos_178065822-stock-illustration-profile-anonymous-face-icon-gray.jpg?forcejpeg=true"
-    const {setTargetUser, targetUser} = useContext(UserContext)
+    const {curUser} = useContext(AuthContext)
+    const {addFollowing} = useContext(UserContext)
+    const [follows, setFollows] = useState(isFriend)
+    const id = friend._id
+    const meId = curUser._id
 
-    const setTarget = () => {
-        setTargetUser({username})
+    const clickyClick = () => {
+        const data = {
+            id: id,
+            idMe: meId
+        }
+        setFollows(!follows)
+        addFollowing(data)
     }
 
-
-
+    if(friend.username != curUser.username){
     return(
         <div className = 'friend-card'>
-            <Link to=  '/friend'>
                 <Card>
-                    <img src = {url} alt = "friend" height = {50} width = {50}/>
-                    <h5 onClick = {setTarget}>{username}</h5>
-                    {targetUser && <h3>{targetUser.bio}</h3>}
+                    <img src = {friend.profileUrl} alt = "friend" height = {50} width = {50}/>
+                    <h5>{friend.username}</h5>
+                    {follows ? <button>Unfollow</button>:<button onClick = {clickyClick}>Follow</button>}
                 </Card>
-            </Link>
         </div>
     )
- }
+ }}
  export default FriendCard
 

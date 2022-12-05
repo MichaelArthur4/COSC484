@@ -2,7 +2,6 @@ import {createContext, useState, useEffect} from 'react'
 import jwt_decode from 'jwt-decode'
 import { AuthContext } from './AuthContext'
 import { useContext } from 'react'
-//the Provider allows access to variables inside provider... that's why your shit ain't work
 const UserContext = createContext(/*{ID: null, token: null, login: () => {}, logout: () => {}}*/)
 
 export const UserProvider = ({children}) => {
@@ -11,6 +10,7 @@ export const UserProvider = ({children}) => {
     const [token, setToken] = useState()
     const [username, setUsername] = useState()
     const [targetUser, setTargetUser] = useState()
+    const [following, setFollowing] = useState()
     const [curUser, setCurUser] = useState(null)
     const [users, setUsers] = useState(null)
 
@@ -107,11 +107,25 @@ export const UserProvider = ({children}) => {
             },
             body: JSON.stringify()
         })
-        const data = await response.json({message:'hi'})
+        const data = await response.json()
         setUsers(data)
+        console.log(data)
     }
 
+    const getFollowing = async(id) => {
+        const response = await fetch('/users/me/following/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id)
+        })
+        const data = await response.json()
 
+        setFollowing(data)
+        console.log('data from user context' + data)
+
+    }
     //info is {username: ..., post: ...}
     const addPost = async(info) => {
         const response = await fetch('/users/me/posts', {
@@ -122,7 +136,7 @@ export const UserProvider = ({children}) => {
             body: JSON.stringify(info)
         })
         const data = await response.json()
-
+        
         setCurUser(data)
     }
     const getCurrentUser = async(_id) => {
@@ -146,19 +160,29 @@ export const UserProvider = ({children}) => {
         }
     
 
-    const getTargetUser = async(username) => {
+    const getTargetUser = async(id) => {
         const response = await fetch('/users/user', {
-            method: 'GET',
+            method: 'POST',
             headers: {
             'Content-Type' : 'application/json'
             },
-            body: JSON.stringify(username)
+            body: JSON.stringify(id)
         })
         try{
         const data = await response.json()
         
-        setCurUser(data)}
+        setTargetUser(data)}
         catch{}
+    }
+    //two userids
+    const addFollowing = async(info) => {
+        const response = await fetch('/users/me/following', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(info)
+        })
     }
 
     return (
@@ -168,11 +192,15 @@ export const UserProvider = ({children}) => {
             //logout,
             user,
             curUser,
+            targetUser,
             editData,
             addPost,
             getUserList, users,
             getTargetUser,
-            getCurrentUser
+            getCurrentUser,
+            addFollowing,
+            following,
+            getFollowing
         }}>
             {children}
         </UserContext.Provider>

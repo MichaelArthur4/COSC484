@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import Card from "../shared/Card"
 import UserContext from "../../context/UserContext"
 import {v4 as uuid} from 'uuid'
+import { AuthContext } from "../../context/AuthContext"
 
 function PostForm(){
     const[song,setSong] = useState("")
@@ -9,7 +10,8 @@ function PostForm(){
     const[review,setReview] = useState("")
 
     //need to update
-    const {curUser, addPost} = useContext(UserContext)
+    const {addPost} = useContext(UserContext)
+    const {curUser} = useContext(AuthContext)
 
     const handleSongText = (e) => {
         setSong(e.target.value)

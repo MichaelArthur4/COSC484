@@ -90,6 +90,40 @@ const editInfo = asyncHandler(async(req,res) => {
     
 })
 
+const getFollowingArray = asyncHandler(async(req,res) => {
+    const {id} = req.body
+    console.log(id)
+    const user = await User.findById(id)
+    const followedArray = []
+
+    console.log('user following length: ' + user.following.length)
+    console.log(user)
+    for(var i = 0; i < user.following.length; i++){
+        var followedUser = await User.findById(user.following[i])
+        if(followedUser){
+            //console.log(followedUser.username)
+            followedArray.push(followedUser)
+        }
+    }
+    res.status(200).json(followedArray)
+})
+
+const getFollowerArray = asyncHandler(async(req,res) => {
+    const {id} = req.body
+    console.log(id)
+    const user = await User.findById(id)
+    const followedArray = []
+
+    for(var i = 0; i < user.follower.length; i++){
+        var followerUser = await User.findById(user.follower[i])
+        if(followerUser){
+            followedArray.push(followerUser)
+            
+        }
+    }
+    res.status(200).json(JSON.stringify(followedArray))
+})
+
 
 
 
@@ -97,8 +131,8 @@ const editInfo = asyncHandler(async(req,res) => {
 
 //get info of a specified user
 const getUser = asyncHandler(async(req,res) => {
-    const {username} = req.body
-    const user = await User.findOne({username})
+    const {id} = req.body
+    const user = await User.findOne({id})
     res.status(200).json(user)
 })
 
@@ -125,6 +159,7 @@ const deleteUser = asyncHandler(async(req,res) => {
 
 //fixed :) takes username and "post: {song, review}"" as input
 const addPost = asyncHandler(async(req,res) => {
+    console.log(req.body)
     const {username, post} = req.body
     const user = await User.findOneAndUpdate({username}, {$push:{posts:post}})
     return res.status(200).json(user)
@@ -143,6 +178,16 @@ const addComments = asyncHandler(async(req,res)=>{
 const getFollowing =asyncHandler(async(req,res) => {
     const {username} = req.body
     const user = await User.findOne({username})
+    const followedArray = []
+    console.log(user.following.length)
+    console.log(user.following)
+    for(var i = 0; i < user.following.length; i++){
+        var followedUser = await User.findById(user.following[i])
+        if(followedUser){
+            //console.log(followedUser.username)
+            followedArray.push(followedUser)
+        }
+    }
     res.status(200).json(user.following)
 })
 
@@ -160,21 +205,20 @@ const getFollowers = asyncHandler(async(req,res) => {
 //add a follower to user and following to target user 
 //Mike fix of josiah 'code'
 const addFollow = async (req,res)=> {
-    console.log(req.body)
     const {id, idMe} = req.body
         try{
             const user = await User.findById(id);
-            console.log('user: ' + user)
             const currentUser = await User.findById(idMe);
-            console.log('current user: ' + currentUser)
             if(!user.follower.includes(idMe)){
                 await user.updateOne({$push:{follower:idMe}});
                 await currentUser.updateOne({$push:{following:id}});
+                console.log('success')
                 res.status(200).json("success");
 
             }
         }catch(err){
             res.status(500).json({'message': 'error in addFollow'})
+            console.log('error')
         }
 }
 
@@ -199,7 +243,11 @@ const getPosts = asyncHandler(async(req,res) => {
 //Unless I want to populate a page with them?
 const getUsers = asyncHandler(async(req,res) => {
     const users = await User.find()
-    res.status(200).json(users)
+    if(users){
+    res.status(200).json(users)}
+    else{
+        res.status(404).json({'message': 'cannot find users'})
+    }
 })
 
 
@@ -269,6 +317,7 @@ const getToken = (id) =>{
 }
 
 
+
 module.exports = {
     registerUser,
     loginUser,
@@ -280,5 +329,5 @@ module.exports = {
     getUser,
     addPost, 
     addComments,
-    addFollow
+    addFollow, getFollowingArray, getFollowingArray, getFollowerArray
 }
