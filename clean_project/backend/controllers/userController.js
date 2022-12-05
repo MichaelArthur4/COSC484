@@ -1,8 +1,10 @@
+
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcryptjs')
 const bodyParser = require('body-parser')
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
+
 
 
 const JWT_SECRET = 'shhh'
@@ -60,11 +62,9 @@ const registerUser = asyncHandler(async(req,res) => {
 
 //current user
 const getMe = asyncHandler(async(req,res) => {
-    console.log(req.body)
     const id = req.body.id
     console.log(id)
     const user = await User.findById(id)
-    console.log(user)
     res.status(200).json(user)
     
 })
@@ -203,13 +203,6 @@ const getUsers = asyncHandler(async(req,res) => {
 })
 
 
-
-
-
-
-
-
-
 ///api/users/login
 const loginUser = asyncHandler(async(req,res) => {
     const {username, password} = req.body
@@ -235,12 +228,29 @@ const loginUser = asyncHandler(async(req,res) => {
         }
         //invalid password
         else{
-            res.status(401)
+            res.status(401).json({
+                id: null,
+                token: null,
+                username: null,
+                bio: null,
+                topartists: null,
+                topsongs: null,
+                posts: null
+            })
             throw new Error('Invalid password')
         }
         
     }
     else{
+        res.status(401).json({
+            id: null,
+            token: null,
+            username: null,
+            bio: null,
+            topartists: null,
+            topsongs: null,
+            posts: null
+        })
         throw new Error('Username not found ')
     }
 })
