@@ -1,10 +1,8 @@
-
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcryptjs')
 const bodyParser = require('body-parser')
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
-
 
 
 const JWT_SECRET = 'shhh'
@@ -62,9 +60,11 @@ const registerUser = asyncHandler(async(req,res) => {
 
 //current user
 const getMe = asyncHandler(async(req,res) => {
+    console.log(req.body)
     const id = req.body.id
     console.log(id)
     const user = await User.findById(id)
+    console.log(user)
     res.status(200).json(user)
     
 })
@@ -201,6 +201,13 @@ const getUsers = asyncHandler(async(req,res) => {
     const users = await User.find()
     res.status(200).json(users)
 })
+
+
+
+
+
+
+
 
 
 ///api/users/login
