@@ -22,6 +22,10 @@ function MainPage(){
 
     const [token, setToken] = useState("")
     const [searchInput, setSearchInput] = useState("");
+    const logout = ()=>{
+        setToken("")
+        window.localStorage.removeItem("token")
+    }
     
     
 
@@ -37,6 +41,7 @@ function MainPage(){
         .then(result => result.json())
         .then(data => setToken(data.access_token))
     },[])
+
 
 
 
@@ -72,7 +77,10 @@ function MainPage(){
             </Link>
             </div>
             <div>
+            {!token?
             <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
+            : <button onClick={logout}>Logout</button>
+            }
             </div>
             
   
