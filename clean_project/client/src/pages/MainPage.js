@@ -49,6 +49,21 @@ function MainPage(){
         .then(data => setToken(data.access_token))
     },[])
 
+    async function search(){
+        console.log("Search for "+ searchInput);
+        var artistParameters = {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        }
+
+        var artistID = await fetch ('https://api.spotify.com/v1/search' + searchInput + '&type=artist',artistParameters)
+
+    }
+
+    
 
 
 
