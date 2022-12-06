@@ -26,6 +26,9 @@ function Header({user}) {
                 <Link  to = '/friendslist'>
                     <h5>FriendsList      </h5>
                 </Link>
+                <Link to ='/login'>
+                     <h5>Login</h5>
+                </Link>
 
                 {user && <p>Welcome {user.username}</p> }
             </div>
