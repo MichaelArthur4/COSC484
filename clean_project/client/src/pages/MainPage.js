@@ -9,24 +9,39 @@ function MainPage(){
     const {curUser} = useContext(UserContext)
     return(
         <>
-        <div>
+            <div></div>
+            <div class="menu">
+            
+            <div class="bar">
             Main Page
-            <Link to= '/profile'>
+            </div>
+
+           
+            <Link to= '/profile' class="bar" >
                 Profile 
             </Link>
-                   
-            <Link to= '/signup'>
+
+
+            <Link to= '/signup' class="bar">
                 Signup 
             </Link>
-            <Link to= '/login'>
+ 
+
+   
+            <Link to= '/login' class="bar">
                 Login
             </Link>
-            <Link to='/friendslist'>
+          
+
+            <Link to='/friendslist' class="bar">
                 FriendList
             </Link>
             </div>
+  
+      
             <div>
                 <PostForm />
+                <h1>Ideally we would have a list of friend's posts here but there's no way we're going to get to that</h1>
             </div>
             </>
     )
