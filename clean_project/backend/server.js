@@ -6,12 +6,12 @@ const PORT = 5001 || 8000
 
 const app = express()
 
-connectDB()
+//connectDB()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.get('/', (req,res) => {
-    //res.status(200).send({message: 'Welcome to port 5001'})
+    res.status(200).send({message: 'Welcome to port 5001'})
 })
 
 app.use('/api/users', require('./routes/userRoutes'))
