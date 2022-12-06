@@ -6,10 +6,6 @@ import PostList from '../components/PostList'
 import UserContext from '../context/UserContext'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
-
-import { Container, InputGroup, FormControl, Button, Row, Card}from 'react-bootstrap';
-
-
 function MainPage(){
     //add in follower post list later
     const {curUser} = useContext(UserContext)
@@ -26,9 +22,20 @@ function MainPage(){
         setToken("")
         window.localStorage.removeItem("token")
     }
+    const searchArtists = async (e) =>{
+        const {data} = await axios.get("https://api.spotify.com/v1/search", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                q: searchInput,
+                type: "artist"
+            }
+        })
+        console.log(data);
+    }
     
     
-
     useEffect(()=>{
         var authParameters = {
             method: 'POST',
@@ -80,6 +87,14 @@ function MainPage(){
             {!token?
             <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
             : <button onClick={logout}>Logout</button>
+            }
+
+            {token ?
+            <form onSubmit={searchArtists}>
+            <input type="text" onChange={e => setSearchInput(e.target.value)}/>
+            <button type ={"submit"}>Search</button>
+            </form>
+            :<h3>Please login </h3>
             }
             </div>
             
